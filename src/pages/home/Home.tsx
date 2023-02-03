@@ -1,15 +1,12 @@
-import e from 'express'
 import React, { useEffect, useRef, useState } from 'react'
 import './home.css'
 
-import img1 from '../../assets/process1.jpg'
-import img2 from '../../assets/process2.jpg'
-import img3 from '../../assets/process3.jpg'
+import { companyList } from '../../constants/companyList'
 
 const Home = () => {
   const imgRef = useRef<any>(null)
   const [overlayHeight, setOverlayHeight] = useState<number>(20)
-  const [isActive, setIsActive] = useState<boolean>(false)
+  const [isActive, setIsActive] = useState<any>(companyList[0])
 
   useEffect(() => {
     const el = document.querySelector('.agency__home__desc')
@@ -30,10 +27,11 @@ const Home = () => {
     }
   }, [])
 
-  const handleMouseEnter = (company: string) => {
+  const handleMouseEnter = (company: any) => {
     imgRef?.current?.childNodes.forEach((child: any) => {
-      if (child.getAttribute('data-company-type') === company) {
+      if (child.getAttribute('data-company-type') === company.company) {
         child.classList.toggle('is-active')
+        setIsActive(company)
       } else {
         child.classList.remove('is-active')
       }
@@ -85,32 +83,26 @@ const Home = () => {
       </div>
 
       <div className="agency__home__hero " ref={imgRef}>
-        <div
-          className={`agency__home__imgs is-active`}
-          data-company-type="one"
-          onMouseEnter={() => handleMouseEnter('one')}
-        >
-          <img src={img1} alt="1" />
-        </div>
-        <div
-          className={`agency__home__imgs`}
-          data-company-type="two"
-          onMouseEnter={() => handleMouseEnter('two')}
-        >
-          <img src={img2} alt="2" />
-        </div>
-        <div
-          className={`agency__home__imgs`}
-          data-company-type="three"
-          onMouseOver={() => handleMouseEnter('three')}
-        >
-          <img src={img3} alt="3" />
-        </div>
+        {companyList.map((company, index) => (
+          <div
+            style={{ '--i': index } as React.CSSProperties}
+            className={`agency__home__imgs ${index === 0 ? 'is-active' : ''} `}
+            key={index}
+            data-company-type={company.company}
+            onMouseEnter={() => handleMouseEnter(company)}
+          >
+            <img src={company.imgUrl} alt={company.company} />
+          </div>
+        ))}
       </div>
       <div className="agency__footer">
-        <p>Branding</p>
-        <p>Website Design and Development</p>
-        <h1>Devise -- Recruiting & Staffing</h1>
+        <div>
+          <p>{isActive.work}</p>
+          <p>{isActive.desc}</p>
+          <h1>
+            {isActive.company} -- {isActive.company_desc}
+          </h1>
+        </div>
       </div>
     </div>
   )
