@@ -6,19 +6,25 @@ import { companyList } from '../../constants/companyList'
 const Home = () => {
   const imgRef = useRef<any>(null)
   const [overlayHeight, setOverlayHeight] = useState<number>(20)
-  const [isActive, setIsActive] = useState<any>(companyList[0])
+  const [isActive, setIsActive] = useState<{
+    company: string
+    company_desc: string
+    work: string
+    desc: string
+    imgUrl: string
+  }>(companyList[0])
 
   useEffect(() => {
     const el = document.querySelector('.agency__home__desc')
     if (el) {
       el.addEventListener('scroll', () => {
-        if (el.getBoundingClientRect().height < window.innerHeight / 2) {
+        if (el.getBoundingClientRect().height < window.innerHeight / 2.5) {
           setOverlayHeight((overlayHeight) => overlayHeight + 0.5)
           el.scrollTop = 0
         }
 
         if (
-          el.getBoundingClientRect().height > window.innerHeight / 2 &&
+          el.getBoundingClientRect().height > window.innerHeight / 2.5 &&
           el.scrollTop === 0
         ) {
           setOverlayHeight(20)
@@ -27,7 +33,13 @@ const Home = () => {
     }
   }, [])
 
-  const handleMouseEnter = (company: any) => {
+  const handleMouseEnter = (company: {
+    company: string
+    company_desc: string
+    work: string
+    desc: string
+    imgUrl: string
+  }) => {
     imgRef?.current?.childNodes.forEach((child: any) => {
       if (child.getAttribute('data-company-type') === company.company) {
         child.classList.toggle('is-active')

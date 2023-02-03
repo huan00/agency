@@ -1,11 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './navbar.css'
 
 const Navbar = () => {
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false)
+  const [time, setTime] = useState<string>('')
   const handleCopy = () => {
     navigator.clipboard.writeText('available for work')
   }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(getTime())
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [time])
 
   const handleModal = () => {
     setIsModalVisible((prev) => !prev)
@@ -37,7 +46,7 @@ const Navbar = () => {
         <p>Services</p>
         <div className="agency__navbar__location">
           <p>NYC--</p>
-          <p>{getTime()}</p>
+          <p>{time}</p>
         </div>
       </div>
       <div
