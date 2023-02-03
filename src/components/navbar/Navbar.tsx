@@ -15,15 +15,11 @@ const Navbar = () => {
     const date = new Date()
     return new Intl.DateTimeFormat('en-US', {
       timeZone: 'America/New_York',
-      // year: 'numeric',
-      // month: 'numeric',
-      // day: 'numeric',
       hour: 'numeric',
       minute: 'numeric'
-      // second: 'numeric'
     }).format(date)
   }
-  console.log(getTime())
+
   return (
     <div className="agency__navbar agency__padding">
       <div className="agency__navbar__logo">

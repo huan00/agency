@@ -29,3 +29,19 @@ code {
 .agency__padding {
   padding: 1rem 2rem
 }
+
+.section__title {
+  font-family: var(--font-family);
+  font-size: 10px;
+  line-height: 16px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.section__text {
+  font-family: var(--font-family);
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
